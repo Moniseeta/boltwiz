@@ -1,16 +1,14 @@
 package routes
 
 import (
+	"github.com/boltdbgui/server/handlers"
 	"github.com/labstack/echo/v4"
 )
 
 func RegisterV1Routes(e *echo.Echo) {
 	v1 := e.Group("/api/v1")
-	v1.GET("", sayHello, can("api"))
-}
-
-func sayHello(c echo.Context) error {
-	return nil
+	v1.GET("", handlers.SayHello, can("api"))
+	v1.POST("/list", handlers.ListElement)
 }
 
 // can checks that the current user's role is allowed to perform all of the

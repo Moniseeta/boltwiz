@@ -6,7 +6,9 @@ require (
 	github.com/labstack/echo/v4 v4.11.4
 	github.com/pkg/errors v0.9.1
 	github.com/spf13/cobra v1.8.0
+	go.etcd.io/bbolt v1.3.8
 	go.uber.org/zap v1.26.0
+	golang.org/x/xerrors v0.0.0-20231012003039-104605ab7028
 )
 
 require (

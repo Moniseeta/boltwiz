@@ -1,7 +1,10 @@
 package cmd
 
 import (
+	"fmt"
+
 	"github.com/boltdbgui/common/logger"
+	"github.com/boltdbgui/modules/database/repository"
 	"github.com/boltdbgui/server"
 	"github.com/pkg/errors"
 	"github.com/spf13/cobra"
@@ -30,5 +33,9 @@ func init() {
 }
 
 func Execute() error {
+	err := repository.Init(input.dbPath)
+	if err != nil {
+		return errors.Wrap(err, fmt.Sprintf("Unable to initialize db connection in dbpath %s", input.dbPath))
+	}
 	return rootCmd.Execute()
 }
