@@ -2,6 +2,7 @@ package repository
 
 import (
 	"fmt"
+	"strings"
 
 	"github.com/boltdbgui/modules/database/model"
 	bolt "go.etcd.io/bbolt"
@@ -50,7 +51,7 @@ func ListElement(input model.ListElemReqBody) (elem model.ListedElem, err error)
 				}
 			}
 			_ = rootBkt.ForEach(func(k []byte, v []byte) error {
-				if input.SearchKey != "" && string(k) != input.SearchKey {
+				if input.SearchKey != "" && !strings.Contains(string(k), input.SearchKey) {
 					return nil
 				}
 				if v == nil {
@@ -76,7 +77,7 @@ func ListElement(input model.ListElemReqBody) (elem model.ListedElem, err error)
 			})
 		} else {
 			_ = tx.ForEach(func(name []byte, b *bolt.Bucket) error {
-				if input.SearchKey != "" && string(name) != input.SearchKey {
+				if input.SearchKey != "" && !strings.Contains(string(name), input.SearchKey) {
 					return nil
 				}
 				stats := b.Stats()
@@ -90,38 +91,9 @@ func ListElement(input model.ListElemReqBody) (elem model.ListedElem, err error)
 					})
 
 				return nil
-			}) // TODO revisit
+			})
 		}
-		//if input.SearchKey != "" {
-		//	if rootBkt != nil {
-		//		if elBkt := rootBkt.Bucket([]byte(input.SearchKey)); elBkt != nil {
-		//			elem.LevelStack = append(input.LevelStack, input.SearchKey)
-		//			elem.IsBucket = true
-		//			stats := elBkt.Stats()
-		//			elem.NoOfChildBkts = stats.InlineBucketN
-		//			elem.NoOfPairs = stats.KeyN
-		//			// TODO need to write code for details of child buckets
-		//			/*elBkt.ForEachBucket(func(bkt []byte) error {
-		//				elem.ChildBkts = append(elem.ChildBkts, string(bkt))
-		//			})*/
-		//		} else if elVal := rootBkt.Get([]byte(input.Key)); elVal != nil {
-		//			elem.LevelStack = append(input.LevelStack, input.Key)
-		//			elem.IsBucket = false
-		//			elem.Value = string(elVal)
-		//		} else {
-		//			return xerrors.New(fmt.Sprintf("No Bucket or Key found by the name : %s under the level : %s", input.Key, input.LevelStack))
-		//		}
-		//	} else {
-		//		elem.LevelStack = []string{siblingBkts[0]}
-		//		elem.IsBucket = true
-		//		elem.SiblingBkts = siblingBkts[1:]
-		//	}
-		//
-		//} else {
-		//	elem.LevelStack = []string{siblingBkts[0]}
-		//	elem.IsBucket = true
-		//	elem.SiblingBkts = siblingBkts[1:]
-		//}
+
 		elem.LevelStack = input.LevelStack
 		elem.SearchKey = input.SearchKey
 		elem.Results = resultFullSet
