@@ -65,7 +65,7 @@ func ListElement(input model.ListElemReqBody) (elem model.ListedElem, err error)
 							Name:          string(k),
 							IsBucket:      true,
 							Value:         "",
-							NoOfChildBkts: stats.InlineBucketN,
+							NoOfChildBkts: stats.BucketN,
 							NoOfPairs:     stats.KeyN,
 						})
 				} else {
@@ -89,7 +89,7 @@ func ListElement(input model.ListElemReqBody) (elem model.ListedElem, err error)
 						Name:          string(name),
 						IsBucket:      true,
 						Value:         "",
-						NoOfChildBkts: stats.InlineBucketN,
+						NoOfChildBkts: stats.BucketN,
 						NoOfPairs:     stats.KeyN,
 					})
 
