@@ -2,7 +2,13 @@ package handlers
 
 import (
 	"encoding/json"
+	"fmt"
 	"io"
+	"net/http"
+
+	"github.com/labstack/gommon/log"
+
+	"github.com/boltdbgui/modules/database/usecase"
 
 	"github.com/boltdbgui/utils"
 
@@ -30,7 +36,11 @@ func ListElement(c echo.Context) error {
 	searchKey := c.QueryParam("key")
 	reqBody.PageSize = pageSize
 	reqBody.Page = pageNum
-	reqBody.Key = searchKey
-
-	return nil
+	reqBody.SearchKey = searchKey
+	resp, err := usecase.ListElement(reqBody)
+	if err != nil {
+		log.Error(err)
+		return echo.NewHTTPError(http.StatusInternalServerError, fmt.Sprintf("Failed Getting unregistered images: %v", err))
+	}
+	return c.JSON(http.StatusOK, resp)
 }

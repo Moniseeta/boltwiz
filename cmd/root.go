@@ -16,6 +16,10 @@ var rootCmd = &cobra.Command{
 	Long:  `Start the boltdb browser server`,
 	Run: func(cmd *cobra.Command, args []string) {
 		logger.NewLogger("DEBUG")
+		err := repository.Init(input.dbPath)
+		if err != nil {
+			panic(fmt.Sprintf("Unable to initialize db connection in dbpath %s : error %v", input.dbPath, err))
+		}
 		server.StartServer()
 	},
 }
@@ -33,9 +37,6 @@ func init() {
 }
 
 func Execute() error {
-	err := repository.Init(input.dbPath)
-	if err != nil {
-		return errors.Wrap(err, fmt.Sprintf("Unable to initialize db connection in dbpath %s", input.dbPath))
-	}
+
 	return rootCmd.Execute()
 }

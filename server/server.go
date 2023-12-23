@@ -12,6 +12,7 @@ func StartServer() {
 	// Echo instance
 	e := echo.New()
 
+	//e.Use(middleware.Recover())
 	// Routes
 	routes.RegisterStaticRoutes(e)
 	routes.RegisterV1Routes(e)
