@@ -15,7 +15,12 @@
 *.out
 
 # Dependency directories (remove the comment below to include it)
-# vendor/
+vendor/
+
+local/
 
 # Go workspace file
 go.work
+
+# IDE workspace
+.idea*

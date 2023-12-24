@@ -1,6 +1,7 @@
 package server
 
 import (
+	"github.com/labstack/echo/v4/middleware"
 	"net/http"
 
 	"github.com/boltdbgui/server/routes"
@@ -12,6 +13,8 @@ func StartServer() {
 	// Echo instance
 	e := echo.New()
 
+	//e.Use(middleware.Recover())
+	e.Use(middleware.CORS())
 	// Routes
 	routes.RegisterStaticRoutes(e)
 	routes.RegisterV1Routes(e)
