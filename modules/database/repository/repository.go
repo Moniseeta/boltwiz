@@ -39,6 +39,7 @@ func Close() error {
 
 func ListElement(input model.ListElemReqBody) (elem model.ListedElem, err error) {
 	var resultFullSet []model.Result
+	searchkey := strings.ToLower(input.SearchKey)
 	err = db.View(func(tx *bolt.Tx) error {
 		var rootBkt *bolt.Bucket
 		if len(input.LevelStack) > 0 {
@@ -49,11 +50,11 @@ func ListElement(input model.ListElemReqBody) (elem model.ListedElem, err error)
 			for i, val := range input.LevelStack[1:] {
 				rootBkt = rootBkt.Bucket([]byte(val))
 				if rootBkt == nil {
-					return xerrors.New(fmt.Sprintf("No Bucket found by the name : %s under the level : %s", val, input.LevelStack[:i]))
+					return xerrors.New(fmt.Sprintf("No Bucket found by the name : %s under the level : %s", val, strings.Join(input.LevelStack[:i+1], "/")))
 				}
 			}
 			_ = rootBkt.ForEach(func(k []byte, v []byte) error {
-				if input.SearchKey != "" && !strings.Contains(string(k), input.SearchKey) {
+				if input.SearchKey != "" && !strings.Contains(strings.ToLower(string(k)), searchkey) {
 					return nil
 				}
 				if v == nil {
@@ -79,7 +80,7 @@ func ListElement(input model.ListElemReqBody) (elem model.ListedElem, err error)
 			})
 		} else {
 			_ = tx.ForEach(func(name []byte, b *bolt.Bucket) error {
-				if input.SearchKey != "" && !strings.Contains(string(name), input.SearchKey) {
+				if input.SearchKey != "" && !strings.Contains(strings.ToLower(string(name)), searchkey) {
 					return nil
 				}
 				stats := b.Stats()
@@ -118,7 +119,7 @@ func AddBuckets(input model.BucketsToAdd) (err error) {
 			for i, val := range input.LevelStack[1:] {
 				rootBkt = rootBkt.Bucket([]byte(val))
 				if rootBkt == nil {
-					return xerrors.New(fmt.Sprintf("No Bucket found by the name : %s under the level : %s", val, input.LevelStack[:i]))
+					return xerrors.New(fmt.Sprintf("No Bucket found by the name : %s under the level : %s", val, strings.Join(input.LevelStack[:i+1], "/")))
 				}
 			}
 			for _, bkt := range input.Buckets {
@@ -153,7 +154,7 @@ func AddPairs(input model.PairsToAdd) (err error) {
 		for i, val := range input.LevelStack[1:] {
 			rootBkt = rootBkt.Bucket([]byte(val))
 			if rootBkt == nil {
-				return xerrors.New(fmt.Sprintf("No Bucket found by the name : %s under the level : %s", val, input.LevelStack[:i]))
+				return xerrors.New(fmt.Sprintf("No Bucket found by the name : %s under the level : %s", val, strings.Join(input.LevelStack[:i+1], "/")))
 			}
 		}
 		for _, pair := range input.Pairs {
@@ -182,7 +183,7 @@ func DeleteElement(input model.ItemToDelete) (err error) {
 			for i, val := range input.LevelStack[1:] {
 				rootBkt = rootBkt.Bucket([]byte(val))
 				if rootBkt == nil {
-					return xerrors.New(fmt.Sprintf("No Bucket found by the name : %s under the level : %s", val, input.LevelStack[:i]))
+					return xerrors.New(fmt.Sprintf("No Bucket found by the name : %s under the level : %s", val, strings.Join(input.LevelStack[:i+1], "/")))
 				}
 			}
 			if bkt := rootBkt.Bucket([]byte(input.Key)); bkt != nil {
@@ -218,7 +219,7 @@ func RenameElement(input model.ItemToRename) (err error) {
 			for i, val := range input.LevelStack[1:] {
 				rootBkt = rootBkt.Bucket([]byte(val))
 				if rootBkt == nil {
-					return xerrors.New(fmt.Sprintf("No Bucket found by the name : %s under the level : %s", val, input.LevelStack[:i]))
+					return xerrors.New(fmt.Sprintf("No Bucket found by the name : %s under the level : %s", val, strings.Join(input.LevelStack[:i+1], "/")))
 				}
 			}
 
@@ -254,7 +255,7 @@ func UpdatePairValue(input model.ItemToUpdate) (err error) {
 			for i, val := range input.LevelStack[1:] {
 				rootBkt = rootBkt.Bucket([]byte(val))
 				if rootBkt == nil {
-					return xerrors.New(fmt.Sprintf("No Bucket found by the name : %s under the level : %s", val, input.LevelStack[:i]))
+					return xerrors.New(fmt.Sprintf("No Bucket found by the name : %s under the level : %s", val, strings.Join(input.LevelStack[:i+1], "/")))
 				}
 			}
 			if val := rootBkt.Get([]byte(input.Key)); val != nil {

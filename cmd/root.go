@@ -20,6 +20,7 @@ var rootCmd = &cobra.Command{
 		if err != nil {
 			panic(fmt.Sprintf("Unable to initialize db connection in dbpath %s : error %v", input.dbPath, err))
 		}
+		defer repository.Close() // nolint: errcheck
 		server.StartServer()
 	},
 }
