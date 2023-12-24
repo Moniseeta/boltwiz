@@ -22,3 +22,35 @@ type Result struct {
 	ChildBkts     []string `json:"child_bkts,omitempty"`
 	ChildKeys     []string `json:"child_keys,omitempty"`
 }
+
+type ItemToDelete struct {
+	LevelStack []string `json:"level_stack"`
+	Key        string   `json:"key"`
+}
+
+type PairsToAdd struct {
+	LevelStack []string `json:"level_stack"`
+	Pairs      []Pair   `json:"pairs"`
+}
+
+type BucketsToAdd struct {
+	LevelStack []string `json:"level_stack"`
+	Buckets    []string `json:"buckets"`
+}
+
+type Pair struct {
+	Key   string      `json:"key"`
+	Value interface{} `json:"value"`
+}
+
+type ItemToUpdate struct {
+	LevelStack []string    `json:"level_stack"`
+	Key        string      `json:"key"`
+	NewValue   interface{} `json:"new_value,omitempty"`
+}
+
+type ItemToRename struct {
+	LevelStack []string `json:"level_stack"`
+	Key        string   `json:"key"`
+	NewKey     string   `json:"new_key,omitempty"`
+}
