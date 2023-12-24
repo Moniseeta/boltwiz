@@ -3,8 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build",
+    "serve": "vue-cli-service serve --mode development",
+    "build": "vue-cli-service build --mode production",
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
@@ -27,8 +27,8 @@
     "@vue/cli-service": "~5.0.0",
     "eslint": "^7.32.0",
     "eslint-plugin-vue": "^8.0.3",
-    "sass": "1.32.12",
-    "sass-loader": "^12.0.0",
+    "sass": "1.69.5",
+    "sass-loader": "12.6.0",
     "vue-cli-plugin-quasar": "~5.0.1"
   },
   "eslintConfig": {

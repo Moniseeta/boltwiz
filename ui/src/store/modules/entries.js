@@ -1,7 +1,7 @@
 import {defineStore} from "pinia";
 import axios from "axios";
 
-const BASE_URL = ''
+const BASE_URL = process.env.VUE_APP_API_URL || ''
 
 export default defineStore('entries', {
     state() {
