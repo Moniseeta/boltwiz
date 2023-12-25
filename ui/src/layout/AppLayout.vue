@@ -6,7 +6,7 @@
           <div class="offset-1 col-9">
             <div class="row" style="align-items: center;">
               <q-icon size="sm" class="q-mr-sm" name="img:img/icon.png" />
-                BoltDB GUI
+                BoltWiZ
             </div>
           </div>
         </q-toolbar>

@@ -95,8 +95,16 @@
                       direction="right"
                       padding="5px"
                   >
-                    <q-fab-action @click="addBucketDialog=true" color="purple" padding="5px" label="Bucket" />
-                    <q-fab-action v-if="stack.length > 0" @click="addPairDialog=true" color="secondary" padding="5px" label="Pair" />
+                    <q-fab-action @click="addBucketDialog=true" label-style="padding-left: 3px" color="purple-4" padding="5px" label="Bucket">
+                      <template v-slot:icon>
+                        <q-icon size="xs" class="q-ml-xs" name="topic" color="white" />
+                      </template>
+                    </q-fab-action>
+                    <q-fab-action v-if="stack.length > 0" @click="addPairDialog=true" label-style="padding-left: 3px" padding="5px" color="light-green-4" label="Pair">
+                      <template v-slot:icon>
+                        <q-icon size="xs" class="q-ml-xs" name="text_snippet" color="white" />
+                      </template>
+                    </q-fab-action>
                   </q-fab>
                 </div>
 

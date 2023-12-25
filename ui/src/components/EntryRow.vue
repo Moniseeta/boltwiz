@@ -6,16 +6,16 @@
       <div class="row" style="width: calc(100% - 35px)">
         <div class="editable-text">
           <div style="line-height: 40px !important;" >{{ row.name }}
-            <q-badge class="q-ml-sm" color="red-4" v-if="row.child_buckets_count > 0">
-              <q-icon name="topic" color="white" class="q-ml-xs" /> {{ row.child_buckets_count }}
+            <q-badge class="q-ml-sm" color="purple-4" v-if="row.child_buckets_count > 0">
+              <q-icon name="topic" color="white" class="q-mr-xs" /> {{ row.child_buckets_count }}
             </q-badge>
             <q-badge class="q-ml-sm" color="light-green-4" v-if="row.child_pairs_count > 0">
-              <q-icon name="text_snippet" color="white" class="q-ml-xs" /> {{ row.child_pairs_count }}
+              <q-icon name="text_snippet" color="white" class="q-mr-xs" /> {{ row.child_pairs_count }}
             </q-badge>
             <q-spinner-ios class="q-ml-sm" v-if="row.loading" size="sm" color="grey" />
           </div>
           <div class="actions">
-            <q-btn @click.stop="editItem($event, row)" class="edit-btn" color="grey-6" round dense flat icon="edit"/>
+            <q-btn v-if="!row.is_bucket" @click.stop="editItem($event, row)" class="edit-btn" color="grey-6" round dense flat icon="edit"/>
             <q-btn @click.stop="deleteEntry($event, row)" class="edit-btn" color="red-4" round dense flat icon="delete"/>
           </div>
         </div>
@@ -23,7 +23,7 @@
     </template>
 
     <template v-else>
-      <q-input @click.stop dense debounce="300" color="primary" style="width: calc(100% - 35px)" v-model="row.name">
+      <q-input @click.stop @keydown.enter="renameEntry($event, row)" dense debounce="300" color="primary" style="width: calc(100% - 35px)" v-model="row.name">
         <template v-slot:append>
           <q-btn @click.stop="renameEntry($event, row)" round dense flat color="blue" icon="check_circle"/>
           <q-btn @click.stop="row.name = row.original_name; row.editing = false" round dense flat icon="cancel"/>
@@ -35,8 +35,8 @@
       <div @click.stop style="cursor:text;" :class="!row.expanded? 'row-content-container' : 'row-content-container expanded'">
         <div v-if="!row.edit_content" class="row-content" style="padding: 10px">
           <div class="row-content-text">{{ formatContent(row) }}</div>
-          <q-btn @click.stop="row.format = !row.format" round dense flat class="no-hover" color="blue" icon="code"/>
-          <q-btn @click.stop="copy(row)" round dense flat class="no-hover" color="blue" icon="content_copy"/>
+          <q-btn @click.stop="row.format = !row.format" round dense flat class="no-hover q-mr-sm" color="blue" icon="code"/>
+          <q-btn @click.stop="copy(row)" round dense flat class="no-hover q-mr-sm" color="blue" icon="content_copy"/>
           <q-btn @click.stop="row.edit_content = true" round dense flat class="no-hover" color="blue" icon="edit"/>
         </div>
         <div v-else class="row-content">

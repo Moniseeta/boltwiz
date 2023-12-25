@@ -216,6 +216,7 @@ func RenameElement(input model.ItemToRename) (err error) {
 			if rootBkt == nil {
 				return xerrors.New(fmt.Sprintf("No Root Bucket found by the name : %s", input.LevelStack[0]))
 			}
+
 			for i, val := range input.LevelStack[1:] {
 				rootBkt = rootBkt.Bucket([]byte(val))
 				if rootBkt == nil {
