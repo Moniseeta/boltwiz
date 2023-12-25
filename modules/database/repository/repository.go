@@ -59,14 +59,14 @@ func ListElement(input model.ListElemReqBody) (elem model.ListedElem, err error)
 				}
 				if v == nil {
 					elBkt := rootBkt.Bucket(k)
-					stats := elBkt.Stats()
+					bktCnt, pairCnt := getInlineBucketandPairCount(elBkt)
 					resultFullSet = append(resultFullSet,
 						model.Result{
 							Name:          string(k),
 							IsBucket:      true,
 							Value:         "",
-							NoOfChildBkts: stats.BucketN,
-							NoOfPairs:     stats.KeyN,
+							NoOfChildBkts: bktCnt,
+							NoOfPairs:     pairCnt,
 						})
 				} else {
 					resultFullSet = append(resultFullSet,
@@ -83,14 +83,14 @@ func ListElement(input model.ListElemReqBody) (elem model.ListedElem, err error)
 				if input.SearchKey != "" && !strings.Contains(strings.ToLower(string(name)), searchkey) {
 					return nil
 				}
-				stats := b.Stats()
+				bktCnt, pairCnt := getInlineBucketandPairCount(b)
 				resultFullSet = append(resultFullSet,
 					model.Result{
 						Name:          string(name),
 						IsBucket:      true,
 						Value:         "",
-						NoOfChildBkts: stats.BucketN,
-						NoOfPairs:     stats.KeyN,
+						NoOfChildBkts: bktCnt,
+						NoOfPairs:     pairCnt,
 					})
 
 				return nil
@@ -108,6 +108,17 @@ func ListElement(input model.ListElemReqBody) (elem model.ListedElem, err error)
 	return elem, nil
 }
 
+func getInlineBucketandPairCount(b *bolt.Bucket) (bktCnt, pairCnt int) {
+	_ = b.ForEach(func(k, v []byte) error {
+		if v == nil {
+			bktCnt = bktCnt + 1
+		} else {
+			pairCnt = pairCnt + 1
+		}
+		return nil
+	})
+	return bktCnt, pairCnt
+}
 func AddBuckets(input model.BucketsToAdd) (err error) {
 	err = db.Update(func(tx *bolt.Tx) error {
 		var rootBkt *bolt.Bucket
