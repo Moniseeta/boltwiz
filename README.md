@@ -9,7 +9,7 @@
 
 ## Key Features
 
-- **List:** Effortlessly view all buckets or key-value pairs within the current hierarchy of your BoltDB file [List Buckets].
+- **List:** Effortlessly view all buckets or key-value pairs within the current hierarchy of your BoltDB file.
 - **Search:** Quickly find child buckets or keys that match a specific substring, making data retrieval straightforward and fast.
 - **Add:** Intuitively add new buckets or key-value pairs under the current bucket. At the root level, you have the ability to add new buckets.
 - **Rename:** Conveniently rename the keys of pairs. (Note: Renaming of buckets is not yet supported, but we're working on it!)
