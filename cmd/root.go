@@ -2,11 +2,11 @@ package cmd
 
 import (
 	"fmt"
+	"github.com/boltdbgui/utils"
 	"github.com/pkg/browser"
 	"go.uber.org/zap"
 	"time"
 
-	"github.com/boltdbgui/common/logger"
 	"github.com/boltdbgui/modules/database/repository"
 	"github.com/boltdbgui/server"
 	"github.com/pkg/errors"
@@ -18,7 +18,7 @@ var rootCmd = &cobra.Command{
 	Short: "Boltdb Server",
 	Long:  `Start the boltdb browser server`,
 	Run: func(cmd *cobra.Command, args []string) {
-		log := logger.NewLogger("DEBUG")
+		log := utils.NewLogger("DEBUG")
 		err := repository.Init(input.dbPath)
 		if err != nil {
 			panic(fmt.Sprintf("Unable to initialize db connection in dbpath %s : error %v", input.dbPath, err))
