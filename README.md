@@ -28,14 +28,25 @@
 
 > **Linux:**
 > ```bash
-> wget https://example.com/path/to/boltwiz
+> wget https://github.com/Moniseeta/boltwiz/releases/download/v0.0.1/boltwiz.linux
 > ```
 > **Mac OS:**
 > ```bash
-> wget https://example.com/path/to/boltwiz
+> wget https://github.com/Moniseeta/boltwiz/releases/download/v0.0.1/boltwiz.macOS
 > ```
 
-3. Ensure the downloaded file has executable permissions:
+3. Rename the downloaded executable to boltwiz
+
+> **Linux:**
+> ```bash
+> mv boltwiz.linux boltwiz
+> ```
+> **Mac OS:**
+> ```bash
+> mv boltwiz.macOS boltwiz
+> ```
+
+4. Ensure the downloaded file has executable permissions:
 
    ```bash
    chmod +x boltwiz
@@ -43,7 +54,7 @@
 
 ### Run BoltWiZ
 
-4. Run BoltWiZ with the specified `--db-path` argument:
+5. Run BoltWiZ with the specified `--db-path` argument:
 
    ```bash
    ./boltwiz --db-path /path/to/bolt.db
