@@ -2,10 +2,10 @@
   <q-layout view="lHh Lpr lFf">
     <div class="main-content">
       <q-header>
-        <q-toolbar class="q-py-md">
+        <q-toolbar class="q-py-sm">
           <div class="offset-1 col-9">
-            <div class="row" style="align-items: center;">
-              <q-icon size="sm" class="q-mr-sm" name="img:img/icon.png" />
+            <div class="row" style="align-items: center; font-size: large">
+              <q-icon size="xl" class="q-mr-sm" name="img:img/icon.png" />
                 BoltWiZ
             </div>
           </div>

@@ -19,6 +19,7 @@ git checkout -b feature-branch
 ```
 
 4. **Make Changes:** Make your changes to the code. Ensure that your code follows the project's coding standards.
+Refer to [Project Setup](./SETUP.md) for more details.
 
 5. **Commit Changes:** Commit your changes with clear and concise commit messages.
 

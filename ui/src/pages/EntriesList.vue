@@ -211,7 +211,7 @@ export default {
           original_content: item.value,
           original_name: item.name,
           is_bucket: item.is_bucket,
-          child_buckets_count: item.no_of_child_bkts-1 || 0,
+          child_buckets_count: item.no_of_child_bkts || 0,
           child_pairs_count: item.no_of_pairs || 0,
           expanded: false,
           edit_name: false,
