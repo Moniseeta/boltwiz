@@ -62,9 +62,10 @@
   ```
 
 ## Demo
-<video width="100%" autoplay controls>
-  <source src="./docs/video/DemoBolt.mp4" type="video/mp4">
-</video>
+
+https://github.com/Moniseeta/boltwiz/assets/11961813/699805c4-b02a-4602-928c-6a99987c732e
+
+
 
 ## Support and Contributions
 
