@@ -24,18 +24,6 @@ func RegisterStaticRoutes(e *echo.Echo) {
 
 	// configure static routes
 	for _, path := range staticPages {
-		e.Group("/"+path, middleware.Gzip()).
-			Use(
-				func(next echo.HandlerFunc) echo.HandlerFunc {
-					return func(c echo.Context) error {
-						c.Response().Header().Set("Strict-Transport-Security", "max-age=31536000; includeSubDomains; preload")
-						return next(c)
-					}
-				},
-				middleware.StaticWithConfig(
-					middleware.StaticConfig{
-						Root: "./ui/dist/" + path,
-					}),
-			)
+		e.GET("/"+path+"/*", contentHandler, middleware.Gzip())
 	}
 }
