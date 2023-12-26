@@ -62,10 +62,9 @@
   ```
 
 ## Demo
-
-https://github.com/Moniseeta/boltwiz/assets/11961813/699805c4-b02a-4602-928c-6a99987c732e
-
-
+<video width="100%" autoplay controls>
+  <source src="https://github.com/Moniseeta/boltwiz/assets/11961813/699805c4-b02a-4602-928c-6a99987c732e" type="video/mp4">
+</video>
 
 ## Support and Contributions
 
