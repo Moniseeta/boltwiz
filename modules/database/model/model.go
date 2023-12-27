@@ -8,9 +8,10 @@ type ListElemReqBody struct {
 }
 
 type ListedElem struct {
-	LevelStack []string `json:"level_stack"`
-	SearchKey  string   `json:"search_key,omitempty"`
-	Results    []Result `json:"results"`
+	LevelStack   []string `json:"level_stack"`
+	SearchKey    string   `json:"search_key,omitempty"`
+	ExceedsLimit bool     `json:"exceeds_limit"`
+	Results      []Result `json:"results"`
 }
 
 type Result struct {

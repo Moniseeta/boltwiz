@@ -1,15 +1,16 @@
 package server
 
 import (
-	"github.com/labstack/echo/v4/middleware"
 	"net/http"
+
+	"github.com/labstack/echo/v4/middleware"
 
 	"github.com/boltdbgui/server/routes"
 
 	"github.com/labstack/echo/v4"
 )
 
-func StartServer() {
+func StartServer(port string) {
 	// Echo instance
 	e := echo.New()
 
@@ -20,7 +21,7 @@ func StartServer() {
 	routes.RegisterV1Routes(e)
 
 	server := &http.Server{
-		Addr: ":8090",
+		Addr: ":" + port,
 	}
 
 	if err := e.StartServer(server); err != http.ErrServerClosed {

@@ -29,7 +29,7 @@ var rootCmd = &cobra.Command{
 			go func() {
 				time.Sleep(2 * time.Second) // wait for server to start
 				log.Info("Opening browser....")
-				err := browser.OpenURL("http://localhost:8090")
+				err := browser.OpenURL("http://localhost:" + input.port)
 
 				if err != nil {
 					log.Error("Error while opening browser", zap.Error(err))
@@ -37,18 +37,20 @@ var rootCmd = &cobra.Command{
 			}()
 		}
 
-		server.StartServer()
+		server.StartServer(input.port)
 	},
 }
 
 var input = new(struct {
 	dbPath string
 	local  bool
+	port   string
 })
 
 func init() {
 	rootCmd.Flags().StringVarP(&input.dbPath, "db-path", "d", "", "path to the bolt db file")
 	rootCmd.Flags().BoolVarP(&input.local, "local", "l", false, "open the browser automatically")
+	rootCmd.Flags().StringVarP(&input.port, "port", "p", "8090", "port to serve the server")
 
 	err := rootCmd.MarkFlagRequired("db-path")
 	if err != nil {

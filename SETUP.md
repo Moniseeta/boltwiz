@@ -74,5 +74,9 @@ go run main.go
 This will start the Golang server.
 
 > **Important**: Make sure to build the UI before running the Golang server.
+> 
+> For Goland, you can use before-launch configuration to build ui automatically before every run
+> 
+> ![build-config-goland](./docs/img/build-config-goland.png)
 
 For more detailed information, refer to the official documentation of [Vue](https://v3.vuejs.org/), [Quasar](https://quasar.dev/), and [Golang](https://golang.org/doc/).

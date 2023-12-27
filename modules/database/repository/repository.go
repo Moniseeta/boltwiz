@@ -39,6 +39,7 @@ func Close() error {
 
 func ListElement(input model.ListElemReqBody) (elem model.ListedElem, err error) {
 	var resultFullSet []model.Result
+	cntOfRecords := 0
 	searchkey := strings.ToLower(input.SearchKey)
 	err = db.View(func(tx *bolt.Tx) error {
 		var rootBkt *bolt.Bucket
@@ -55,6 +56,11 @@ func ListElement(input model.ListElemReqBody) (elem model.ListedElem, err error)
 			}
 			_ = rootBkt.ForEach(func(k []byte, v []byte) error {
 				if input.SearchKey != "" && !strings.Contains(strings.ToLower(string(k)), searchkey) {
+					return nil
+				}
+				cntOfRecords += 1
+				if cntOfRecords > 10000 {
+					elem.ExceedsLimit = true
 					return nil
 				}
 				if v == nil {
@@ -81,6 +87,11 @@ func ListElement(input model.ListElemReqBody) (elem model.ListedElem, err error)
 		} else {
 			_ = tx.ForEach(func(name []byte, b *bolt.Bucket) error {
 				if input.SearchKey != "" && !strings.Contains(strings.ToLower(string(name)), searchkey) {
+					return nil
+				}
+				cntOfRecords += 1
+				if cntOfRecords > 10000 {
+					elem.ExceedsLimit = true
 					return nil
 				}
 				bktCnt, pairCnt := getInlineBucketandPairCount(b)

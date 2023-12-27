@@ -24,3 +24,5 @@ go.work
 
 # IDE workspace
 .idea*
+
+.run/*

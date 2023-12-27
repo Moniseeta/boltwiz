@@ -1,5 +1,5 @@
 <template>
-  <div style="min-height: calc(100vh - 105px)">
+  <div style="min-height: calc(100vh - 115px)">
     <div class="row">
       <div class="bg-grey-1 full-width">
         <div class="q-py-xs text-center">
@@ -197,12 +197,23 @@ export default {
         filter: filter,
       })
 
-      if (!response) {
+      if (!response.results) {
         items.value = []
         return
       }
 
-      items.value = response.map((item, index) => {
+      if (response.exceeds_limit) {
+          $q.notify({
+              message: 'Too many records to display. Showing first 10000 records only. Please use the search to filter the results.',
+              color: 'warning',
+              textColor: 'white',
+              classes: 'notify-limit-warn',
+              icon: 'warning',
+              position: 'bottom',
+          }
+          )
+      }
+      items.value = response.results.map((item, index) => {
         return {
           id: index,
           name: item.name,

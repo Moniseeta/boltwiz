@@ -22,11 +22,11 @@ export default defineStore('entries', {
             this.currentStack = request.stack || []
 
             const response = await axios.post(url, request)
-            const entries = response.data.results
+            const respBody = response.data
 
             this.currentPage = request.page
             this.pageSize = request.pageSize
-            return entries
+            return respBody
         },
         async addBuckets(request) {
             await axios.post( BASE_URL + '/api/v1/add_buckets', request)
