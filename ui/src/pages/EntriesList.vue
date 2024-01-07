@@ -77,6 +77,7 @@
               :filter="filter"
               row-key="id"
               hide-header
+              :pagination="pagination"
               :rows-per-page-options="[0]"
               :loading="loading"
               :columns="[{ name: 'name', label: 'Name', field: 'name', align: 'left', sortable: true }]"
@@ -144,6 +145,7 @@ export default {
 
     const stack = ref([])
     const filter = ref('')
+    const pagination = ref({ rowsNumber: 0 })
     const loading = ref(true)
 
     const addBucketDialog = ref(false)
@@ -210,9 +212,9 @@ export default {
               classes: 'notify-limit-warn',
               icon: 'warning',
               position: 'bottom',
-          }
-          )
+          })
       }
+
       items.value = response.results.map((item, index) => {
         return {
           id: index,
@@ -329,6 +331,7 @@ export default {
       //table
       entriesTable,
       filter,
+      pagination,
       loading,
       onRequest,
       handleRowClick,
